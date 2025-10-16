@@ -39,9 +39,9 @@ const today = new Date();
 
 const initialState: InitialStateType = {
     date: `${today.getDate()}.${today.getMonth() + 1}.${today.getFullYear()}`,
-    actsArray: loadLocalStoredData().actsArray,
-    note: loadLocalStoredData().note,
-    plan: loadLocalStoredData().plan,
+    actsArray: loadLocalStoredData().actsArray || [],
+    note: loadLocalStoredData().note || "",
+    plan: loadLocalStoredData().plan || "",
 };
 const dayObjectSlice = createSlice({
     name: "dayObject",
