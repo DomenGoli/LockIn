@@ -1,0 +1,16 @@
+import Button from "../../ui/Button";
+import Note from "./Note";
+import NoteParent from "./NoteParent";
+
+function NoteCC() {
+    return (
+        <NoteParent>
+            <NoteParent.Open>
+                <Button>Note</Button>
+            </NoteParent.Open>
+            <NoteParent.Window>{<Note />}</NoteParent.Window>
+        </NoteParent>
+    );
+}
+
+export default NoteCC;

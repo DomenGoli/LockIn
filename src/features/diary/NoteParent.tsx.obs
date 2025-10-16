@@ -1,0 +1,55 @@
+import { cloneElement, createContext, useContext, useEffect, useState } from "react";
+import { createPortal } from "react-dom";
+
+// const sidebar = document.querySelector(".sidebar")
+const sidebar = document.getElementById("sidebar");
+
+//1 context
+const NoteContext = createContext({});
+
+//2 parent
+export default function NoteParent({
+    children,
+}: {
+    children: React.ReactNode;
+}) {
+    const [isOpen, setIsOpen] = useState(false);
+
+    function handleOpen() {
+        console.log("dfdf");
+        setIsOpen((isOpen) => !isOpen);
+    }
+
+    return (
+        <NoteContext.Provider value={{ isOpen, handleOpen }}>
+            {children}
+        </NoteContext.Provider>
+    );
+}
+
+//3 children
+function Open({ children }) {
+    const { handleOpen } = useContext(NoteContext);
+
+    return cloneElement(children, { onClick: handleOpen });
+}
+
+function Window({ children }: { children: React.ReactNode }) {
+    const [domReady, setDomReady] = useState(false)
+    const { isOpen } = useContext(NoteContext);
+
+    useEffect(function(){
+        setDomReady(true)
+    }, [])
+
+    if (!isOpen) return null;
+
+    
+
+    // return (<div>{children}</div>)
+    return createPortal(<div>{children}</div>, sidebar);
+}
+
+//4 properites
+NoteParent.Open = Open;
+NoteParent.Window = Window;

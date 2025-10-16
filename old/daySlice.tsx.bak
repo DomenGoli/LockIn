@@ -1,0 +1,166 @@
+import { createSlice } from "@reduxjs/toolkit";
+import type { PayloadAction } from "@reduxjs/toolkit";
+import { createDay, deleteDayApi } from "../../../service/apiDays";
+
+
+///// OBSOLETE
+// daySlice je bil zdruzen z activity slice
+// arhivirano za refereanco
+
+
+
+
+type InputsType = {
+    name: string;
+    input: string;
+};
+
+// type InitialStateType = {
+//     inputsArray: InputsType[];
+// };
+
+type InitialStateType = {
+    date: string;
+    activities: InputsType[];
+};
+
+//// Load input
+function loadTempInputs() {
+    const storedValue = localStorage.getItem("tempInputs");
+    return storedValue ? JSON.parse(storedValue) : [];
+}
+
+//////////////////////////// Reducer///////////////////////////////////////
+// const initialState: InitialStateType = {
+//     inputsArray: loadTempInputs()
+// };
+const today = new Date()
+const initialState: InitialStateType = {
+    date: `${today.getDate()}.${today.getMonth() + 1}.${today.getFullYear()}`,
+    activities: loadTempInputs(),
+};
+
+const daySlice = createSlice({
+    name: "day",
+    initialState,
+    reducers: {
+        collectInput: {
+            prepare(name, input) {
+                return { payload: { name, input } };
+            },
+            reducer(state, action: PayloadAction<InputsType>) {
+                if (
+                    state.activities.some(
+                        (input) => input.name === action.payload.name
+                    )
+                ) {
+                    state.activities = state.activities.map((input) => {
+                        if (input.name === action.payload.name)
+                            return {
+                                name: input.name,
+                                input: action.payload.input,
+                            };
+                        else return input;
+                    });
+                } else state.activities.push(action.payload);
+                localStorage.setItem(
+                    "tempInputs",
+                    JSON.stringify([...state.activities])
+                );
+            },
+        },
+        sendDayInputs(state) {
+            state.activities = [];
+            localStorage.removeItem("tempInputs")
+        },
+        deleteDay(state) {
+            return state
+        }
+    },
+});
+
+// Custom action za ustvarjanje day objecta in posiljanje na server
+export function sendDayInputs(date, activities) {
+    return async function(dispatch) {
+        const newDay = {
+            date,
+            activities
+        }
+        createDay(newDay)
+
+        dispatch({type: "day/sendDayInputs"})
+    }
+}
+
+export function deleteDay(id:string) {
+    return async function(dispatch) {
+        deleteDayApi(id)
+
+        dispatch({type: "day/deleteDay"})
+    }
+}
+
+
+
+
+
+
+ // sending POST request to API, sending data to API
+//  async function createCity(newCity) {
+//     dispatch({ type: "loading" });
+//     try {
+//         const res = await fetch(`${BASE_URL}/cities`, {
+//             method: "POST",
+//             body: JSON.stringify(newCity),
+//             headers: { "Content-Type": "aplication/json" },
+//         });
+//         const data = await res.json();
+
+//         //insynch state with remote state (kasneje to prevzame reactQuery tool)
+//         // setCities(cities=> [...cities, newCity])
+
+//         // dispatch({type: "city/created", payload: newCity})
+//         dispatch({ type: "city/created", payload: data });
+//     } catch {
+//         dispatch({
+//             type: "rejected",
+//             payload: "There was an errror creating city...",
+//         });
+//     }
+// }
+
+export default daySlice.reducer;
+export const { collectInput } = daySlice.actions;
+
+// const initialState: InitialStateType = {
+//     inputsArray: loadTempInputs()
+// };
+
+// const daySlice = createSlice({
+//     name: "day",
+//     initialState,
+//     reducers: {
+//         collectInput: {
+//             prepare(name, input) {
+//                 return { payload: { name, input } };
+//             },
+//             reducer(state, action: PayloadAction<InputsType>) {
+//                 if (
+//                     state.inputsArray.some(
+//                         (input) => input.name === action.payload.name
+//                     )
+//                 ) {
+//                     state.inputsArray = state.inputsArray.map((input) => {
+//                         if (input.name === action.payload.name)
+//                             return {
+//                                 name: input.name,
+//                                 input: action.payload.input,
+//                             };
+//                         else return input;
+//                     });
+//                 } else state.inputsArray.push(action.payload);
+//                 localStorage.setItem("tempInputs", JSON.stringify([...state.inputsArray]))
+//             },
+//         },
+//     },
+// });
