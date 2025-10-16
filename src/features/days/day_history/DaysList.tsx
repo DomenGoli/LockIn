@@ -34,7 +34,13 @@ function DaysList() {
 
     // za filtriranje prikazovanja actov, sinhronizirano z inputDay
     const { actsArray } = useAppSelector((store) => store.dayObject);
-    const existingActsIds = actsArray.map(act => act.id)
+
+    let existingActsIds: string[];
+    if(actsArray) {
+        existingActsIds = actsArray.map(act => act.id)
+    }
+
+    
 
 
     return (
