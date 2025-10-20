@@ -61,7 +61,7 @@ function DaysList() {
     
     if(error) return (<p>{error.message}</p>)
 
-    if (!days)
+    if (!days.length)
         return (
             <div className="flex items-center justify-center">
                 Lista dni je prazna!
