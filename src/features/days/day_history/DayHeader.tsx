@@ -1,10 +1,13 @@
 import Button from "../../../ui/Button";
-import { useAppDispatch } from "../../../hooks";
-import { deleteDay } from "../day_input/dayObjectSlice";
+// import { useAppDispatch } from "../../../hooks";
+// import { deleteDay } from "../day_input/dayObjectSlice";
 import { Form } from "react-router";
 import NoteButton from "../../../ui/NoteButton";
 import { HiOutlineTrash } from "react-icons/hi2";
 import PlanButton from "../../../ui/PlanButton";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { deleteDayApi } from "../../../service/apiDays";
+import toast from "react-hot-toast";
 
 type DayObjectType = {
     date: string;
@@ -12,34 +15,59 @@ type DayObjectType = {
     id: string;
     note: string;
     plan: string;
-    rating: string
+    rating: string;
 };
 
 function DayHeader({ day }: { day: DayObjectType }) {
-    const dispatch = useAppDispatch();
+    // const dispatch = useAppDispatch();
+
+    const queryClient = useQueryClient();
+    const { mutate, isPending: deleting } = useMutation({
+        mutationFn: deleteDayApi,
+        onSuccess: () => {
+            toast.success("Dan je bil uspesno zbrisan!");
+            queryClient.invalidateQueries({
+                queryKey: ["days"],
+            });
+        },
+    });
 
     function handleDelete() {
         if (window.confirm("Izbriši dan?")) {
-            dispatch(deleteDay(day.id));
+            mutate(day.id)
+            // dispatch(deleteDay(day.id));
         }
     }
 
     return (
-        <div className="flex justify-between">
+        <div className="flex">
             <div className="flex flex-row gap-3 p-1">
                 <p>{day.date}</p>
                 <label>{`Ocena dneva: ${
                     day.rating ? day.rating : "N/A"
                 }`}</label>
-                {/* <NoteButton data={day?.note} dayId={day.id} date={day?.date} /> */}
-            {day.note ? <NoteButton data={day?.note} dayId={day.id} date={day?.date}/> : null}
-            {day.plan ? <PlanButton text={day?.plan} dayId={day.id} date={day?.date}/> : null}
+                {day.plan ? (
+                    <PlanButton
+                        text={day?.plan}
+                        dayId={day.id}
+                        date={day?.date}
+                    />
+                ) : null}
+                {day.note ? (
+                    <NoteButton
+                        data={day?.note}
+                        dayId={day.id}
+                        date={day?.date}
+                    />
+                ) : null}
+                
+                <Form onSubmit={handleDelete}>
+                    <Button>
+                        <HiOutlineTrash />
+                    </Button>
+                </Form>
+                {deleting && <p>Brišemo...</p>}
             </div>
-            <Form action="/" method="delete">
-                <Button onClick={handleDelete}>
-                    <HiOutlineTrash />
-                </Button>
-            </Form>
         </div>
     );
 }

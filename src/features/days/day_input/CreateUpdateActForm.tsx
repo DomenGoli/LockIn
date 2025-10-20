@@ -146,12 +146,12 @@ function CreateUpdateActForm({
             </div>
 
             <div className="grid gap-4">
-                <Button onClick={handleAddActivity}>Shrani</Button>
+                <Button variation="form" onClick={handleAddActivity}>Shrani</Button>
                 {isUpdateSession && (
-                    <Button onClick={handleDeleteAct}>Izbrisi aktivnost</Button>
+                    <Button variation="form" onClick={handleDeleteAct}>Izbrisi aktivnost</Button>
                 )}
 
-                <Button onClick={handleBack}>Zapri</Button>
+                <Button variation="form" onClick={handleBack}>Zapri</Button>
             </div>
         </div>
         // <div className="">

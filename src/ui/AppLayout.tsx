@@ -1,7 +1,8 @@
 import { Toaster } from "react-hot-toast";
-import DaysList from "../features/days/day_history/DaysList";
+// import DaysList from "../features/days/day_history/DaysList";
 import InputDay from "../features/days/day_input/InputDay";
 import Sidebar from "./Sidebar";
+import DaysList from "../features/days/day_history/DaysList";
 
 function AppLayout() {
     return (

@@ -3,9 +3,14 @@ const API_URL = "https://json-server-lockin-8.onrender.com/days"
 
 export async function getDaysApi() {
     const res = await fetch(API_URL);
+
+    // For testing
+    // await new Promise((res) => setTimeout(res, 5000));
+
     if (!res.ok) throw Error("Server je off-line");
 
     const data = await res.json();
+    
     return data;
 }
 
@@ -23,6 +28,9 @@ export async function createDayApi(newDay: object) {
 }
 
 export async function deleteDayApi(id: string) {
+    // For testing
+    // await new Promise((res) => setTimeout(res, 5000));
+
     await fetch(`${API_URL}/${id}`, {
         method: "DELETE",
     });

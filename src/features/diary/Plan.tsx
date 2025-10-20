@@ -4,15 +4,10 @@ import { useEffect, useState } from "react";
 import { savePlanToLocalStorage } from "../days/day_input/dayObjectSlice";
 
 function Plan() {
+    // const {plan} = useAppSelector(store => store.dayObject)
     const {plan, date} = useAppSelector(store => store.diary)
-    const [value, setValue] = useState(() => plan)
     const {isPlanOpen} = useAppSelector(store => store.diary)
-    
-
-    //Resitev za stale state
-    useEffect(function() {
-        setValue(plan)
-    }, [plan])
+    const [value, setValue] = useState(() => plan)
 
 
     const dispatch = useAppDispatch();
@@ -22,8 +17,13 @@ function Plan() {
         dispatch(savePlanToLocalStorage(value));
     }
 
+    
+    useEffect(function(){
+        setValue(plan)
+    },[plan])
+    
     if(!isPlanOpen) return null
-
+    
     return (
         <div className="flex flex-col justify-center items-center">
             {/* <p>{date ? date : "Danes"}</p> */}

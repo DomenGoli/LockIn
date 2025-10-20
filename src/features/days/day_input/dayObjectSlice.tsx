@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
-import { createDayApi, deleteDayApi } from "../../../service/apiDays";
+// import { deleteDayApi } from "../../../service/apiDays";
 
 ///////////////////////// TYPES /////////////////////////////////////////////
 type ActivityType = {
@@ -106,32 +106,32 @@ const dayObjectSlice = createSlice({
     },
 });
 
-export function saveDay(date: string, actsArray: ActivityType[], rating: number, note: string, plan: string) {
-    return async function (dispatch: (argo: object) => void) {
-        dispatch({ type: "dayObject/saveDay" });
+// export function saveDay(date: string, actsArray: ActivityType[], rating: number, note: string, plan: string) {
+//     return async function (dispatch: (argo: object) => void) {
+//         dispatch({ type: "dayObject/saveDay" });
         
-        const newDay = {
-            date,
-            actsArray,
-            rating,
-            note,
-            plan,
-        };
-        createDayApi(newDay);
+//         const newDay = {
+//             date,
+//             actsArray,
+//             rating,
+//             note,
+//             plan,
+//         };
+//         // createDayApi(newDay);
 
-    };
-}
+//     };
+// }
 
-export function deleteDay(id: string) {
-    return async function () {
-        deleteDayApi(id);
+// export function deleteDay(id: string) {
+//     return async function () {
+//         deleteDayApi(id);
 
-        // dispatch({type: "activities/deleteDay"})
-    };
-}
+//         // dispatch({type: "activities/deleteDay"})
+//     };
+// }
 
 export default dayObjectSlice.reducer;
-export const { addActivity, deleteActivity, saveInputLocalStorage, updateActivity, saveNoteToLocalStorage, savePlanToLocalStorage } =
+export const {saveDay, addActivity, deleteActivity, saveInputLocalStorage, updateActivity, saveNoteToLocalStorage, savePlanToLocalStorage } =
     dayObjectSlice.actions;
 
 // const activitiesSlice = createSlice({

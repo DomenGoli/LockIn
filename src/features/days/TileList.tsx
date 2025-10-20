@@ -1,5 +1,5 @@
 import Tile from "./Tile";
-import { Outlet } from "react-router";
+// import { Outlet } from "react-router";
 import React from "react";
 
 // type ActivitiesObjectType = {
@@ -35,7 +35,7 @@ function TileList({
         return (
             <div className="flex gap-4">
                 <p>Zacni z dodajanjem aktivnosti.</p>
-                <Outlet />
+                {/* <Outlet /> */}
             </div>
         );
 
@@ -45,7 +45,7 @@ function TileList({
                 {actsArray.map((act) => (
                     <Tile tileMode={tileMode} act={act} key={act.id} />
                 ))}
-                {tileMode === "input" && <Outlet />}
+                {/* {tileMode === "input" && <Outlet />} */}
             </div>
         </div>
     );

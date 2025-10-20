@@ -78,7 +78,7 @@ function PlayButton({onClick}: ButtonProps) {
 
 function PauseButton({onClick}: ButtonProps) {
     return (
-        <button className="btn-pomo" onClick={onClick}>
+        <button className="btn-pomo cursor-pointer" onClick={onClick}>
             {icons.pause}
         </button>
     );
@@ -86,7 +86,7 @@ function PauseButton({onClick}: ButtonProps) {
 
 function StopButton({onClick}: ButtonProps) {
     return (
-        <button className="btn-pomo" onClick={onClick}>
+        <button className="btn-pomo cursor-pointer" onClick={onClick}>
             {icons.reset}
         </button>
     );

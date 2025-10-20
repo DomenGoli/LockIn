@@ -11,7 +11,7 @@ type initialStateType = {
 
 const initialState: initialStateType = {
     isNoteOpen: false,
-    isPlanOpen: true,
+    isPlanOpen: false,
     note: "",
     dayId: "",
     date: "",
