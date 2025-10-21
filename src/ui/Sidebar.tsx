@@ -15,7 +15,7 @@ function Sidebar() {
             <div>
                 <div className="pl-[1rem]">
 
-                <PlanButton text={plan} />
+                {/* <PlanButton text={plan} /> */}
                 </div>
                 <Plan />
             </div>

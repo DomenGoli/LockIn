@@ -63,7 +63,7 @@ function InputDayHeader() {
                 onChange={(e) => setDate(e.target.value)}
             ></input>
             <AddAct />
-            <NoteButton data={note} />
+            <NoteButton planData={plan} data={note} />
             {/* <Form action="/" method="post"> */}
             <Form onSubmit={(e) => handleSavingDay(e)}>
                 <Button>{uploading ? "Uploading" : "Shrani dan"}</Button>

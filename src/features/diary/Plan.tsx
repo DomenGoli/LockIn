@@ -5,8 +5,8 @@ import { savePlanToLocalStorage } from "../days/day_input/dayObjectSlice";
 
 function Plan() {
     // const {plan} = useAppSelector(store => store.dayObject)
-    const {plan, date} = useAppSelector(store => store.diary)
-    const {isPlanOpen} = useAppSelector(store => store.diary)
+    const {plan, date, dayId} = useAppSelector(store => store.diary)
+    const {isNoteOpen} = useAppSelector(store => store.diary)
     const [value, setValue] = useState(() => plan)
 
 
@@ -22,17 +22,17 @@ function Plan() {
         setValue(plan)
     },[plan])
     
-    if(!isPlanOpen) return null
+    if(!isNoteOpen) return null
     
     return (
         <div className="flex flex-col justify-center items-center">
-            {/* <p>{date ? date : "Danes"}</p> */}
+            <p>Plan: {dayId === "0" ? "Danes" : date}</p>
             <textarea
                 className="w-[300px] h-[300px] bg-stone-100 text-black p-1"
                 value={value}
                 onChange={(e) => setValue(e.target.value)}
                 onBlur={handleSavingPlan}
-                disabled={date ? true : false}
+                disabled={dayId === "0" ? false : true}
                 
             />
         </div>

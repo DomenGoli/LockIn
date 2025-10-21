@@ -1,5 +1,5 @@
-// const API_URL = "http://localhost:9000/days";
-const API_URL = "https://json-server-lockin-8.onrender.com/days"
+const API_URL = "http://localhost:9000/days";
+// const API_URL = "https://json-server-lockin-8.onrender.com/days"
 
 export async function getDaysApi() {
     const res = await fetch(API_URL);

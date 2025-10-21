@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { saveNoteToLocalStorage } from "../days/day_input/dayObjectSlice";
 
 function Note() {
-    const {note, date} = useAppSelector(store => store.diary)
+    const {note, date, dayId} = useAppSelector(store => store.diary)
     const [value, setValue] = useState(() => note)
     const {isNoteOpen} = useAppSelector(store => store.diary)
     
@@ -26,13 +26,13 @@ function Note() {
 
     return (
         <div className="flex flex-col justify-center items-center pb-4">
-            <p>Belezka: {date ? date : "Danes"}</p>
+            <p>Belezka: {dayId === "0" ? "Danes" : date}</p>
             <textarea
                 className="w-[300px] h-[300px] bg-stone-100 text-black p-1"
                 value={value}
                 onChange={(e) => setValue(e.target.value)}
                 onBlur={handleSavingNote}
-                disabled={date ? true : false}
+                disabled={dayId === "0" ? false : true}
                 defaultValue="Splaniraj dan!"
             />
         </div>

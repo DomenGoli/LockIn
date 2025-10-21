@@ -34,7 +34,7 @@ function DayHeader({ day }: { day: DayObjectType }) {
 
     function handleDelete() {
         if (window.confirm("Izbriši dan?")) {
-            mutate(day.id)
+            mutate(day.id);
             // dispatch(deleteDay(day.id));
         }
     }
@@ -46,27 +46,30 @@ function DayHeader({ day }: { day: DayObjectType }) {
                 <label>{`Ocena dneva: ${
                     day.rating ? day.rating : "N/A"
                 }`}</label>
-                {day.plan ? (
+                {/* {day.plan ? (
                     <PlanButton
                         text={day?.plan}
                         dayId={day.id}
                         date={day?.date}
                     />
-                ) : null}
-                {day.note ? (
-                    <NoteButton
-                        data={day?.note}
-                        dayId={day.id}
-                        date={day?.date}
-                    />
-                ) : null}
-                
-                <Form onSubmit={handleDelete}>
-                    <Button>
-                        <HiOutlineTrash />
-                    </Button>
-                </Form>
-                {deleting && <p>Brišemo...</p>}
+                ) : null} */}
+                <div className="grid grid-cols-2 gap-4">
+                    {day.note || day.plan ? (
+                        <NoteButton
+                            data={day?.note}
+                            planData={day.plan}
+                            dayId={day.id}
+                            date={day?.date}
+                        />
+                    ) : <div/>}
+
+                    <Form onSubmit={handleDelete}>
+                        <Button>
+                            <HiOutlineTrash />
+                        </Button>
+                    </Form>
+                </div>
+                    {deleting && <p>Brišemo...</p>}
             </div>
         </div>
     );

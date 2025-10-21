@@ -26,7 +26,6 @@ const initialState: initialStateType = {
 
 type DiaryItemType = {
     note: string;
-    planData: string;
     dayId: string;
     date?: string;
 }
@@ -42,8 +41,8 @@ const diarySlice = createSlice({
     initialState,
     reducers: {
         toggleOpenDiary: {
-            prepare(note: string, planData: string, dayId: string, date?: string) {
-                return { payload: { note, planData, dayId, date } };
+            prepare(note: string, dayId: string, date?: string) {
+                return { payload: { note, dayId, date } };
             },
             reducer(state, action: PayloadAction<DiaryItemType>) {
                 state.note = action.payload.note;
@@ -51,7 +50,6 @@ const diarySlice = createSlice({
                     state.isNoteOpen = true;
                     state.dayId = action.payload.dayId;
                     state.note = action.payload.note;
-                    state.plan = action.payload.planData;
                     if(action.payload.date) state.date = action.payload.date;
                 } else if (state.dayId === action.payload.dayId) {
                     state.isNoteOpen = false;
@@ -60,7 +58,6 @@ const diarySlice = createSlice({
                     state.date = "";
                 } else {
                     state.note = action.payload.note;
-                    state.plan = action.payload.planData
                     state.dayId = action.payload.dayId;
                     if(action.payload.date) state.date = action.payload.date;
                 }
